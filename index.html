@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wildflower — Astrology, Tarot, Meditation &amp; ASMR</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-void:#0A0A12;
     --bg-page:#07060B;
     --accent-gold:#C9A961;
     --accent-gold-soft:rgba(201,169,97,0.14);
@@ -55,7 +54,7 @@
   }
   .wrap{
     position:relative; z-index:1;
-    max-width:900px;
+    max-width:1000px;
     margin:0 auto;
     padding:80px 40px 90px 40px;
   }
@@ -63,55 +62,83 @@
     display:flex; align-items:center; justify-content:center; gap:18px;
     margin-bottom:44px;
   }
-  .brand img{width:72px; height:72px; flex-shrink:0;}
+  .brand img{width:56px; height:56px; flex-shrink:0;}
   .brand h1{
-    font-family:var(--font-display); font-weight:500; font-size:42px;
+    font-family:var(--font-display); font-weight:500; font-size:28px;
     color:var(--text-primary); letter-spacing:0.01em; margin:0;
   }
   .intro{
     text-align:center; font-size:16px; line-height:1.6; color:var(--text-secondary);
-    max-width:600px; margin:0 auto 40px auto;
+    max-width:620px; margin:0 auto 40px auto;
   }
-  .download-row{
-    text-align:center; margin-bottom:20px;
+  .tabs{
+    display:flex; justify-content:center; gap:70px;
+    border-bottom:1px solid var(--line-soft);
+    margin-bottom:56px;
   }
+  .tab-btn{
+    background:none; border:none; cursor:pointer;
+    font-family:var(--font-display); font-size:20px; font-weight:500;
+    color:var(--text-secondary);
+    padding:0 0 16px 0;
+    position:relative;
+  }
+  .tab-btn.active{ color:var(--accent-gold); }
+  .tab-btn.active::after{
+    content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px;
+    background:var(--accent-gold);
+  }
+  .tab-panel{ display:none; }
+  .tab-panel.active{ display:block; }
+  .app-layout{
+    display:grid; grid-template-columns:1fr 1fr; gap:5px; align-items:flex-start;
+  }
+  @media (max-width:760px){
+    .app-layout{ grid-template-columns:1fr; }
+  }
+  .app-copy p{
+    font-size:16px; line-height:1.65; color:var(--text-secondary); margin:24px 0 24px 0;
+    min-height:50px;
+  }
+  .carousel-dots{ display:flex; gap:8px; margin-bottom:28px; }
+  .dot{
+    width:8px; height:8px; border-radius:50%; background:var(--line-soft);
+    border:none; cursor:pointer; padding:0; transition:background .2s;
+  }
+  .dot.active{ background:var(--accent-gold); }
   .download-row a{
     display:inline-flex; align-items:center; gap:10px;
-    font-family:var(--font-body); font-weight:300; font-size:19px;
+    font-family:var(--font-body); font-weight:700; font-size:17px;
     color:var(--accent-gold); text-decoration:none;
+    border:2px solid var(--accent-gold-soft); border-radius:999px;
+    padding:12px 22px;
   }
-  .download-row a:hover{ text-decoration:none; }
-  .download-row svg{ width:26px; height:26px; flex-shrink:0; }
-
-  h2.section-title{
-    text-align:center; font-family:var(--font-display); font-weight:500;
-    font-size:24px; color:var(--text-primary); margin:0 0 40px 0;
+  .download-row a:hover{ background:var(--accent-gold-soft); }
+  .download-row svg{ width:22px; height:22px; flex-shrink:0; }
+  .phone-frame{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    height:520px;
   }
-  h2.logo {
-    text-align:center; font-family:var(--font-display); font-weight:600;
-    font-size:28px; color:white;
+  .phone-shot{
+    max-height:520px; max-width:100%;
+    border-radius:22px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.55);
+    opacity:0; position:absolute;
+    transition:opacity .5s ease;
+  }
+  .phone-shot.active{ opacity:1; position:relative; }
+  .oracle-intro{
+    text-align:center; font-size:16px; line-height:1.6; color:var(--text-secondary);
+    max-width:620px; margin:0 auto 44px auto;
   }
   .card-grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
+    display:flex;
+    flex-wrap:wrap;
     gap:28px;
+    justify-content:center;
     margin-bottom:20px;
   }
-  .ad {
-    width:560px;
-    margin:0 auto 30px;
-  }
-  .ad img {
-    text-align:center;
-    width:100%;
-  }
-  @media (max-width:720px){
-    .card-grid{ grid-template-columns:repeat(2, 1fr); }
-  }
-  @media (max-width:480px){
-    .card-grid{ grid-template-columns:1fr; }
-  }
-
   .product-card{
     background:var(--card-bg);
     border-radius:14px;
@@ -121,14 +148,18 @@
     flex-direction:column;
     box-shadow:0 12px 30px rgba(0,0,0,0.35);
     transition:transform .15s ease;
+    width:240px;
+    flex:0 0 240px;
   }
   .product-card:hover{ transform:translateY(-3px); }
   .product-cover{
     height:170px;
-    position:relative;
-    display:flex; align-items:center; justify-content:center;
+    width:100%;
+    overflow:hidden;
   }
-  .product-cover img{ width:100%; height:100%; }
+  .product-cover img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
   .product-body{
     padding:14px 16px 16px 16px; position:relative;
     width:100%; box-sizing:border-box; min-height:114px;
@@ -149,20 +180,12 @@
     display:flex; align-items:center; gap:5px;
   }
   .product-price svg{ width:13px; height:13px; }
-
-  .cover-birds{ background:linear-gradient(135deg,#2E4152,#16232B); }
-  .cover-cats{ background:linear-gradient(135deg,#3A2E52,#1B1628); }
-  .cover-herbs{ background:linear-gradient(135deg,#2C4438,#15221B); }
-  .cover-lenormand{ background:linear-gradient(135deg,#43304A,#201823); }
-  .cover-paths{ background:linear-gradient(135deg,#4A3324,#241A12); }
-
   .footer-note{
     text-align:center; margin-top:70px;
     font-family:var(--font-body); font-weight:300; font-size:16px;
   }
-  .footer-note a{ color:var(--accent-gold); text-decoration:none;}
+  .footer-note a{ color:var(--accent-gold); text-decoration:none; }
   .footer-note a:hover{ text-decoration:none; }
-
 </style>
 </head>
 <body>
@@ -171,115 +194,180 @@
 
 <div class="wrap">
   <div class="brand">
-    <img src="wildflower_app_icon.svg" alt="wildflower_logo">
-    <h2 class="logo">Wildflower</h2>
+    <img src="assets/wildflower_app_icon.svg" alt="Wildflower logo">
+    <h1>Wildflower</h1>
   </div>
 
   <p class="intro">Wildflower brings astrology, tarot, Lenormand, guided meditation, and ASMR sleep sounds into one quiet space — a place to check in with yourself daily.</p>
 
-  <div class="download-row">
-    <a href="https://play.google.com/store/apps/details?id=co.tapcart.app.id_JhcXnPRx9q&hl=en" target="_blank" rel="noopener">
-      <span>Download APP from</span>
-      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="gp1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#00C6FF"/><stop offset="100%" stop-color="#00E676"/>
-          </linearGradient>
-          <linearGradient id="gp2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#FFE000"/><stop offset="100%" stop-color="#FF9900"/>
-          </linearGradient>
-          <linearGradient id="gp3" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#FF3A44"/><stop offset="100%" stop-color="#C31162"/>
-          </linearGradient>
-        </defs>
-        <path d="M99 8 L340 240 L99 472 C88 480 80 472 80 460 L80 20 C80 8 88 0 99 8 Z" fill="url(#gp1)"/>
-        <path d="M340 240 L410 210 L99 8 L340 240Z" fill="url(#gp2)"/>
-        <path d="M340 240 L410 270 L99 472 L340 240Z" fill="url(#gp3)"/>
-      </svg>
-      <span>Google Play</span>
-    </a>
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-btn-app" onclick="showTab('app')">Google Play free app</button>
+    <button class="tab-btn" id="tab-btn-oracle" onclick="showTab('oracle')">Oracle card shop (ship from the US)</button>
   </div>
-  <div class="ad">
-    <a href="https://play.google.com/store/apps/details?id=co.tapcart.app.id_JhcXnPRx9q&hl=en" target="_blank" rel="noopener">
-      <img src="ad-upload.png" alt="wildflower_ad">
-    </a>
+
+  <div class="tab-panel active" id="tab-app">
+    <div class="app-layout">
+      <div class="app-copy">
+        <p id="carousel-text">Four modules, one quiet ritual: astrology, Ask (AI-powered tarot and more), meditation, and ASMR sleep sounds — everything you need to check in with yourself daily.</p>
+        <div class="carousel-dots" id="carousel-dots"></div>
+        <div class="download-row">
+          <a href="https://play.google.com/store/apps/details?id=co.tapcart.app.id_JhcXnPRx9q&hl=en" target="_blank" rel="noopener">
+            <span>Download APP from</span>
+            <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="gp1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00C6FF"/><stop offset="100%" stop-color="#00E676"/>
+                </linearGradient>
+                <linearGradient id="gp2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFE000"/><stop offset="100%" stop-color="#FF9900"/>
+                </linearGradient>
+                <linearGradient id="gp3" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FF3A44"/><stop offset="100%" stop-color="#C31162"/>
+                </linearGradient>
+              </defs>
+              <path d="M99 8 L340 240 L99 472 C88 480 80 472 80 460 L80 20 C80 8 88 0 99 8 Z" fill="url(#gp1)"/>
+              <path d="M340 240 L410 210 L99 8 L340 240Z" fill="url(#gp2)"/>
+              <path d="M340 240 L410 270 L99 472 L340 240Z" fill="url(#gp3)"/>
+            </svg>
+            <span>Google Play</span>
+          </a>
+        </div>
+      </div>
+      <div class="phone-frame" id="phone-frame"></div>
+    </div>
   </div>
-  <h2 class="section-title">Wildflower Oracle Card Shop (Ship from the US)</h2>
 
-  <div class="card-grid">
-    <a class="product-card" href="https://www.thegamecrafter.com/games/birds-oracle" target="_blank" rel="noopener">
-      <div class="product-cover cover-birds">
-        <img src="birds_oracle.png" alt="birds_oracle"/>
-      </div>
-      <div class="product-body">
-        <div class="product-name">Birds Oracle</div>
-        <div class="product-tag">Tarot and Oracles</div>
-        <div class="product-price">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
-          $27.99
-        </div>
-      </div>
-    </a>
+  <div class="tab-panel" id="tab-oracle">
+    <p class="oracle-intro">To diversify the spiritual experience, Wildflower has designed a growing collection of oracle card decks. Each one is printed on demand by The Game Crafter and ships worldwide.</p>
 
-    <a class="product-card" href="https://www.thegamecrafter.com/games/astrology-cats-collage" target="_blank" rel="noopener">
-      <div class="product-cover cover-cats">
-        <img src="astrology_cats.png" alt="astrology_cats"/>
-      </div>
-      <div class="product-body">
-        <div class="product-name">Astrology Cats Collage</div>
-        <div class="product-tag">Tarot and Oracles</div>
-        <div class="product-price">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
-          $34.99
+    <div class="card-grid">
+      <a class="product-card" href="https://www.thegamecrafter.com/games/birds-oracle" target="_blank" rel="noopener">
+        <div class="product-cover"><img src="assets/birds_oracle.png" alt="Birds Oracle"></div>
+        <div class="product-body">
+          <div class="product-name">Birds Oracle</div>
+          <div class="product-tag">Tarot and Oracles</div>
+          <div class="product-price">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
+            $27.99
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
 
-    <a class="product-card" href="https://www.thegamecrafter.com/games/herbs-oracle" target="_blank" rel="noopener">
-      <div class="product-cover cover-herbs">
-        <img src="herbs_oracle.png" alt="herbs_oracle"/>
-      </div>
-      <div class="product-body">
-        <div class="product-name">Herbs Oracle</div>
-        <div class="product-tag">Tarot and Oracles</div>
-        <div class="product-price">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
-          $28.99
+      <a class="product-card" href="https://www.thegamecrafter.com/games/astrology-cats-collage" target="_blank" rel="noopener">
+        <div class="product-cover"><img src="assets/astrology_cats.png" alt="Astrology Cats Collage"></div>
+        <div class="product-body">
+          <div class="product-name">Astrology Cats Collage</div>
+          <div class="product-tag">Tarot and Oracles</div>
+          <div class="product-price">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
+            $34.99
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
 
-    <a class="product-card" href="https://www.thegamecrafter.com/games/lenormand-collage" target="_blank" rel="noopener">
-      <div class="product-cover cover-lenormand">
-        <img src="lenormand.png" alt="lenormand"/>
-      </div>
-      <div class="product-body">
-        <div class="product-name">Lenormand Collage</div>
-        <div class="product-tag">Tarot and Oracles</div>
-        <div class="product-price">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
-          $23.99
+      <a class="product-card" href="https://www.thegamecrafter.com/games/herbs-oracle" target="_blank" rel="noopener">
+        <div class="product-cover"><img src="assets/herbs_oracle.png" alt="Herbs Oracle"></div>
+        <div class="product-body">
+          <div class="product-name">Herbs Oracle</div>
+          <div class="product-tag">Tarot and Oracles</div>
+          <div class="product-price">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
+            $28.99
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
 
-    <a class="product-card" href="https://www.thegamecrafter.com/games/paths-to-happiness-collage" target="_blank" rel="noopener">
-      <div class="product-cover cover-paths">
-        <img src="paths_to_happiness.png" alt="paths_to_happiness"/>
-      </div>
-      <div class="product-body">
-        <div class="product-name">Paths to Happiness Collage</div>
-        <div class="product-tag">Self Improvement</div>
-        <div class="product-price">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
-          $32.99
+      <a class="product-card" href="https://www.thegamecrafter.com/games/lenormand-collage" target="_blank" rel="noopener">
+        <div class="product-cover"><img src="assets/lenormand.png" alt="Lenormand Collage"></div>
+        <div class="product-body">
+          <div class="product-name">Lenormand Collage</div>
+          <div class="product-tag">Tarot and Oracles</div>
+          <div class="product-price">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
+            $23.99
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
+
+      <a class="product-card" href="https://www.thegamecrafter.com/games/paths-to-happiness-collage" target="_blank" rel="noopener">
+        <div class="product-cover"><img src="assets/paths_to_happiness.png" alt="Paths to Happiness Collage"></div>
+        <div class="product-body">
+          <div class="product-name">Paths to Happiness Collage</div>
+          <div class="product-tag">Self Improvement</div>
+          <div class="product-price">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2H2v2h2l3.6 7.6-1.4 2.4c-.2.4-.2.8 0 1.2.2.4.6.6 1 .6h11v-2H7.4l1-2h7.4c.4 0 .8-.2 1-.6l3.2-6c.2-.4.2-.8 0-1.1s-.6-.5-1-.5H6.2L5.3 4z"/></svg>
+            $32.99
+          </div>
+        </div>
+      </a>
+    </div>
   </div>
 
   <div class="footer-note">Inquiry: <a href="mailto:wildflower07042026@gmail.com">wildflower07042026@gmail.com</a></div>
 </div>
 
+<script>
+function showTab(tab){
+  document.getElementById('tab-app').classList.toggle('active', tab==='app');
+  document.getElementById('tab-oracle').classList.toggle('active', tab==='oracle');
+  document.getElementById('tab-btn-app').classList.toggle('active', tab==='app');
+  document.getElementById('tab-btn-oracle').classList.toggle('active', tab==='oracle');
+}
+
+const slides = [
+  { img: 'assets/home.jpg', text: 'Four modules, one quiet ritual: astrology, Ask (AI-powered tarot and more), meditation, and ASMR sleep sounds — everything you need to check in with yourself daily.' },
+  { img: 'assets/astrology.jpg', text: 'Explore your personalized natal chart — signs, houses, and aspects, each unfolded with its own meaning.' },
+  { img: 'assets/compatibility.jpg', text: 'See how two charts align with a compatibility score, plus an in-depth read on the relationship.' },
+  { img: 'assets/tarot.jpg', text: 'AI-powered tarot readings — sharp, to the point, and surprisingly perceptive.' },
+  { img: 'assets/tarot-spread.png', text: 'Go deeper with a 5-card spread, revealing more angles and perspective on your question.' },
+  { img: 'assets/meditation_channel.jpg', text: 'Guided meditations across five themes — Focus, Letting Go, Mindfulness, Compassion, and Connection — to deepen your relationship with yourself and the world.' },
+  { img: 'assets/meditation_collection.jpg', text: 'Play your saved meditations in order, on shuffle, or on repeat, with a built-in timer to help you settle into your collection.' },
+  { img: 'assets/sleep_channel.jpg', text: 'Rest well and close your eyes with a vast ASMR sound library across five themes — Tapping, Nature, Personal Care, Ear Massage, and Mouth Sounds.' },
+  { img: 'assets/sleep_collection.jpg', text: 'Play your saved sleep sounds in order, on shuffle, or on repeat, with a built-in timer for a full night of rest.' }
+];
+
+const phoneFrame = document.getElementById('phone-frame');
+const carouselText = document.getElementById('carousel-text');
+const dotsWrap = document.getElementById('carousel-dots');
+
+slides.forEach((s, i) => {
+  const im = document.createElement('img');
+  im.src = s.img;
+  im.className = 'phone-shot' + (i === 0 ? ' active' : '');
+  im.alt = 'Wildflower app screenshot';
+  phoneFrame.appendChild(im);
+
+  const dot = document.createElement('button');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsWrap.appendChild(dot);
+});
+
+let current = 0;
+let timer = null;
+
+function goToSlide(i){
+  const shots = phoneFrame.querySelectorAll('.phone-shot');
+  const dots = dotsWrap.querySelectorAll('.dot');
+  shots[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = i;
+  shots[current].classList.add('active');
+  dots[current].classList.add('active');
+  carouselText.textContent = slides[current].text;
+  resetTimer();
+}
+
+function nextSlide(){
+  goToSlide((current + 1) % slides.length);
+}
+
+function resetTimer(){
+  clearInterval(timer);
+  timer = setInterval(nextSlide, 4500);
+}
+
+resetTimer();
+</script>
 </body>
 </html>
